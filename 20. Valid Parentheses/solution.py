@@ -14,20 +14,16 @@ class Solution:
             "]": "[",
         }
         stack: List[str] = []
-        i = 0
-        while i < len(s):
-            char = s[i]
+        for char in s:
             if char in close_to_open_chars.values():
-                stack.append(s[i])
+                stack.append(char)
             if char in close_to_open_chars.keys():
-                try:
-                    open_char = stack.pop()
-                    if open_char != close_to_open_chars[char]:
-                        return False
-                except IndexError:
+                if stack and stack[-1] == close_to_open_chars[char]:
+                    stack.pop()
+                else:
                     return False
-            i += 1
-        return False if i == len(s) else True
+        return True if not stack else False
+
 
 if __name__ == "__main__":
     s="[]"
